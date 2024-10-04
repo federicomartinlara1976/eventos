@@ -15,7 +15,9 @@ public class AccountController {
 	private ApplicationEventPublisher applicationEventPublisher;
 
 	@PostMapping("/transfer")
-	public void addTransfer(@RequestBody Transfer transfer) {
+	public String addTransfer(@RequestBody Transfer transfer) {
 		applicationEventPublisher.publishEvent(transfer);
+		
+		return "Solicitud realizada correctamente";
 	}
 }

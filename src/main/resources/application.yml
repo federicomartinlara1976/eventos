@@ -1,20 +1,10 @@
 spring:
   application:
     name: eventos
-    description: Microservicio de demostración de eventos de aplicación
-    
-  profiles:
-    active: ${ENV}
     
   main.allow-bean-definition-overriding: true
-  
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
      
 server:
   servlet:
     context-path: /eventos
   port: 8080
-  
-env: ${ENV}
