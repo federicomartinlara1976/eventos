@@ -11,7 +11,7 @@ import net.bounceme.chronos.eventos.model.Transfer;
 @Slf4j
 public class TransferService {
 	
-	private static final Integer SLEEP = 10000;
+	private static final Integer SLEEP = 1000;
 
 	@EventListener
 	@SneakyThrows
@@ -21,7 +21,10 @@ public class TransferService {
 		log.info("Hago cosas...");
 		
 		// Simulación de una tarea que va a tardar
-		Thread.sleep(SLEEP);
+		for (int i=0; i<10; i++) {
+			log.info("Realizando tarea {}", i);
+			Thread.sleep(SLEEP);
+		}
 		
 		log.info("He terminado de hacer mis cosas");
 		
