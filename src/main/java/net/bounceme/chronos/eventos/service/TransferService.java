@@ -43,7 +43,7 @@ public class TransferService {
 		t.setAccountIdFrom(transfer.getAccountIdFrom());
 		t.setAccountIdTo(transfer.getAccountIdTo());
 		t.setAmount(transfer.getAmount());
-		t.setState(Constants.State.INITIATED.getValue());
+		t.setState(Constants.Estado.INICIADA.getValue());
 		t.setStart(new Date());
 		
 		t = transferRepository.save(t);
@@ -69,6 +69,8 @@ public class TransferService {
 	@SneakyThrows
 	public void executeTransfer(TransferDTO transfer) {
 		Transfer t = transferRepository.getById(transfer.getId());
+		t.setState(Constants.Estado.EN_PROGRESO.getValue());
+		t = transferRepository.save(t);
 		
 		if (transfer.getAmount() < amountAlertLimit) {
 			log.info("Iniciando transacción de {} a {}", transfer.getAccountIdFrom(), transfer.getAccountIdTo());
@@ -80,14 +82,14 @@ public class TransferService {
 			}
 			
 			t.setEnd(new Date());
-			t.setState(Constants.State.COMPLETED.getValue());
+			t.setState(Constants.Estado.COMPLETADA.getValue());
 			
 			log.info("Transacción terminada. Se ha transferido {} de {} a {}", transfer.getAmount(),
 					transfer.getAccountIdFrom(), transfer.getAccountIdTo());
 		}
 		else {
 			t.setEnd(new Date());
-			t.setState(Constants.State.REJECTED.getValue());
+			t.setState(Constants.Estado.RECHAZADA.getValue());
 			
 			log.info("La cantidad {} supera el límite establecido. Transacción rechazada", transfer.getAmount());
 		}
