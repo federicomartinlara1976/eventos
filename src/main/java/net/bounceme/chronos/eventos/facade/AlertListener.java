@@ -1,21 +1,21 @@
-package net.bounceme.chronos.eventos.service;
+package net.bounceme.chronos.eventos.facade;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
-import net.bounceme.chronos.eventos.model.Transfer;
+import net.bounceme.chronos.eventos.dto.TransferDTO;
 
-@Service
+@Component
 @Slf4j
-public class AlertService {
+public class AlertListener {
 
 	@Value("${amountAlertLimit}")
 	private Integer amountAlertLimit;
 
 	@EventListener
-	public void sendAlertIfNeeded(Transfer transfer) {
+	public void sendAlertIfNeeded(TransferDTO transfer) {
 		if (transfer.getAmount() > amountAlertLimit) {
 			log.info("La cantidad {} supera el límite establecido a {}. Se enviará alerta", transfer.getAmount(), amountAlertLimit);
 		} else {

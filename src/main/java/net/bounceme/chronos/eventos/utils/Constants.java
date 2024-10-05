@@ -4,13 +4,13 @@ import lombok.Getter;
 
 public class Constants {
 	
-	public enum State {
-		INITIATED("INITIATED"), ACCEPTED("ACCEPTED"), REJECTED("REJECTED"), COMPLETED("COMPLETED");
+	public enum Estado {
+		INICIADA("INICIADA"), EN_PROGRESO("EN_PROGRESO"), RECHAZADA("RECHAZADA"), COMPLETADA("COMPLETADA");
 		
 		@Getter
 		private String value;
 		
-		State(String value) {
+		Estado(String value) {
 			this.value = value;
 		}
 	}
