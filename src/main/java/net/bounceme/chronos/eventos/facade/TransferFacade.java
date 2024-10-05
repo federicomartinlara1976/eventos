@@ -42,8 +42,9 @@ public class TransferFacade {
 	
 	@SneakyThrows
 	public TransferDTO addTransferSincrona(TransferDTO transfer) {
-		transferService.executeTransfer(transfer);
-		return transferDataService.getTransfer(transfer.getId());
+		TransferDTO t = transferDataService.initializeTransfer(transfer);
+		transferService.executeTransfer(t);
+		return transferDataService.getTransfer(t.getId());
 	}
 	
 	public List<TransferDTO> getTransfers() {
