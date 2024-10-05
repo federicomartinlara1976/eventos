@@ -5,7 +5,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
-import net.bounceme.chronos.eventos.model.Transfer;
+import net.bounceme.chronos.eventos.dto.TransferDTO;
 
 @Component
 @Slf4j
@@ -15,7 +15,7 @@ public class AlertListener {
 	private Integer amountAlertLimit;
 
 	@EventListener
-	public void sendAlertIfNeeded(Transfer transfer) {
+	public void sendAlertIfNeeded(TransferDTO transfer) {
 		if (transfer.getAmount() > amountAlertLimit) {
 			log.info("La cantidad {} supera el límite establecido a {}. Se enviará alerta", transfer.getAmount(), amountAlertLimit);
 		} else {
