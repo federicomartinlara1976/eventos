@@ -1,10 +1,8 @@
 package net.bounceme.chronos.eventos.facade;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -13,17 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.eventos.dto.TransferDTO;
 import net.bounceme.chronos.eventos.service.TransferDataService;
 import net.bounceme.chronos.eventos.service.TransferService;
-import net.bounceme.chronos.eventos.utils.Constants;
 
 @Component
 @Slf4j
 public class TransferFacade {
 	
-	private static final Integer SLEEP = 1000;
-	
-	@Value("${amountAlertLimit}")
-	private Integer amountAlertLimit;
-
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
