@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,11 +22,6 @@ import net.bounceme.chronos.eventos.utils.Constants;
 @Service
 @Slf4j
 public class TransferService {
-	
-	private static final Integer SLEEP = 1000;
-	
-	@Value("${amountAlertLimit}")
-	private Integer amountAlertLimit;
 	
 	@Autowired
 	private TransferRepository transferRepository;
@@ -63,36 +56,12 @@ public class TransferService {
 		Optional<Transfer> oTransfer = transferRepository.findById(id);
 		return oTransfer.isPresent() ? modelMapper.map(oTransfer.get(), TransferDTO.class) : null;
 	}
-
-	@EventListener
+	
+	@Transactional
 	@SneakyThrows
-	public void executeTransfer(TransferDTO transfer) {
-		Transfer t = transferRepository.getById(transfer.getId());
-		t.setState(Constants.Estado.EN_PROGRESO.getValue());
+	public TransferDTO saveTransfer(TransferDTO transfer) {
+		Transfer t = modelMapper.map(transfer, Transfer.class);
 		t = transferRepository.save(t);
-		
-		if (transfer.getAmount() < amountAlertLimit) {
-			log.info("Iniciando transacción de {} a {}", transfer.getAccountIdFrom(), transfer.getAccountIdTo());
-			
-			// Simulación de una tarea que va a tardar
-			for (int i=0;i<20;i++) {
-				log.info("Realizando tarea {}", i);
-				Thread.sleep(SLEEP);
-			}
-			
-			t.setEnd(new Date());
-			t.setState(Constants.Estado.COMPLETADA.getValue());
-			
-			log.info("Transacción terminada. Se ha transferido {} de {} a {}", transfer.getAmount(),
-					transfer.getAccountIdFrom(), transfer.getAccountIdTo());
-		}
-		else {
-			t.setEnd(new Date());
-			t.setState(Constants.Estado.RECHAZADA.getValue());
-			
-			log.info("La cantidad {} supera el límite establecido. Transacción rechazada", transfer.getAmount());
-		}
-		
-		transferRepository.save(t);
+		return modelMapper.map(t, TransferDTO.class);
 	}
 }
