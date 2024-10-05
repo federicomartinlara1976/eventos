@@ -22,7 +22,7 @@ public class AccountController {
 	@Autowired
 	private TransferService transferService;
 	
-	@PostMapping("/transfer_a")
+	@PostMapping("/transfers/asincrona")
 	public TransferDTO addTransferAsincrona(@RequestBody TransferDTO transfer) {
 		TransferDTO t = transferService.initializeTransfer(transfer);
 		applicationEventPublisher.publishEvent(t);
@@ -30,7 +30,7 @@ public class AccountController {
 		return t;
 	}
 	
-	@PostMapping("/transfer_s")
+	@PostMapping("/transfers/sincrona")
 	public TransferDTO addTransferSincrona(@RequestBody TransferDTO transfer) {
 		TransferDTO t = transferService.initializeTransfer(transfer);
 		transferService.executeTransfer(t);
@@ -44,7 +44,7 @@ public class AccountController {
 	}
 	
 	@GetMapping("/transfers/{id}")
-	public TransferDTO getTransfers(@PathVariable Long id) {
+	public TransferDTO getTransfer(@PathVariable Long id) {
 		return transferService.getTransfer(id);
 	}
 }

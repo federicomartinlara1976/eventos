@@ -65,7 +65,6 @@ public class TransferService {
 	}
 
 	@EventListener
-	@Transactional
 	@SneakyThrows
 	public void executeTransfer(TransferDTO transfer) {
 		Transfer t = transferRepository.getById(transfer.getId());
