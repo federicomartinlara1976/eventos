@@ -17,8 +17,7 @@
 	<description>Test de eventos</description>
 	
 	<properties>
-		<java.version>11</java.version>
-		<spring-cloud.version>2020.0.3</spring-cloud.version>
+		<java.version>17</java.version>
 	</properties>
 	
 	<dependencies>
@@ -61,6 +60,12 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.bounceme.chronos.libs</groupId>
+			<artifactId>chronos-notification-utils</artifactId>
+			<version>1.0.5-SNAPSHOT</version>
 		</dependency>
 		
 	</dependencies>
