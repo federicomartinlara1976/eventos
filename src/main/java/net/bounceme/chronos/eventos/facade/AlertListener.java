@@ -13,12 +13,17 @@ public class AlertListener {
 
 	@Value("${amountAlertLimit}")
 	private Integer amountAlertLimit;
+	
+//	@Autowired
+//	private NotificationService notificationService;
 
 	@EventListener
 	public void sendAlertIfNeeded(TransferDTO transfer) {
 		if (transfer.getAmount() > amountAlertLimit) {
 			log.info("La cantidad {} supera el límite establecido a {}. Se enviará alerta", transfer.getAmount(), amountAlertLimit);
-		} else {
+//			notificationService.sendNotification("eventos", "La cantidad supera el límite establecido", "WARNING");
+		} 
+		else {
 			log.info("Cantidad {} dentro del límite", transfer.getAmount());
 		}
 	}

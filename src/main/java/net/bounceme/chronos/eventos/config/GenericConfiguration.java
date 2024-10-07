@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+//@ComponentScan(basePackages = {"net.bounceme.chronos.notifications"})
 public class GenericConfiguration {
 	
 	@Bean

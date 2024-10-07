@@ -14,6 +14,17 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: 
+    
+  rabbitmq:
+    username: federico
+    password: MedinaAzahara2468
+    
+
+application:
+  topic: mail-exchange
+  
+  notification:
+    queue: notificaciones
      
 server:
   servlet:
