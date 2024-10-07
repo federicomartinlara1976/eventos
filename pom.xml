@@ -62,11 +62,11 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-		<!-- <dependency>
+		<dependency>
 			<groupId>net.bounceme.chronos.libs</groupId>
 			<artifactId>chronos-notification-utils</artifactId>
 			<version>1.0.5-SNAPSHOT</version>
-		</dependency> -->
+		</dependency>
 		
 	</dependencies>
 
