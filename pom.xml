@@ -13,6 +13,7 @@
 	<groupId>net.bounceme.chronos</groupId>
 	<artifactId>eventos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>eventos</name>
 	<description>Test de eventos</description>
 	
@@ -62,12 +63,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-		<!-- <dependency>
-			<groupId>net.bounceme.chronos.libs</groupId>
-			<artifactId>chronos-notification-utils</artifactId>
-			<version>1.0.5-SNAPSHOT</version>
-		</dependency> -->
-		
 	</dependencies>
 
 	<build>
@@ -76,6 +71,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<image>
+						<builder>paketobuildpacks/builder-jammy-base:latest</builder>
+					</image>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
