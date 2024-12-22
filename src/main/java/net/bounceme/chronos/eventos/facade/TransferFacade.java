@@ -16,6 +16,9 @@ import net.bounceme.chronos.eventos.service.TransferService;
 @Slf4j
 public class TransferFacade {
 	
+	@Value("${amountAlertLimit}")
+	private Integer amountAlertLimit;
+
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
