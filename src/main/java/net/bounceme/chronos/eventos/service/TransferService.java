@@ -31,12 +31,16 @@ public class TransferService {
 	@SneakyThrows
 	public void executeTransfer(TransferDTO transfer) {
 		transferDataService.getTransfer(transfer.getId()).ifPresent(t -> {
-			t.setState(Constants.Estado.EN_PROGRESO.getValue());
-			t = transferDataService.saveTransfer(t);
+			initializeTransfer(t);
 
 			ConditionalExecutor.executeIfOrElse(isBelowLimit, transfer, approvedAction,
 					rejectedAction);
 		});
+	}
+	
+	private void initializeTransfer(TransferDTO t) {
+		t.setState(Constants.Estado.EN_PROGRESO.getValue());
+		t = transferDataService.saveTransfer(t);
 	}
 
 	private void acceptTransfer(TransferDTO t) {
