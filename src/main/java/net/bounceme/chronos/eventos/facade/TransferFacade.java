@@ -1,6 +1,7 @@
 package net.bounceme.chronos.eventos.facade;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +38,7 @@ public class TransferFacade {
 	}
 	
 	@SneakyThrows
-	public TransferDTO addTransferSincrona(TransferDTO transfer) {
+	public Optional<TransferDTO> addTransferSincrona(TransferDTO transfer) {
 		TransferDTO t = transferDataService.initializeTransfer(transfer);
 		transferService.executeTransfer(t);
 		return transferDataService.getTransfer(t.getId());
@@ -47,7 +48,7 @@ public class TransferFacade {
 		return transferDataService.getTransfers();
 	}
 	
-	public TransferDTO getTransfer(Long id) {
+	public Optional<TransferDTO> getTransfer(Long id) {
 		return transferDataService.getTransfer(id);
 	}
 }

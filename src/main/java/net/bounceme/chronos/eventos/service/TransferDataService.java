@@ -1,12 +1,10 @@
 package net.bounceme.chronos.eventos.service;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,41 +20,42 @@ import net.bounceme.chronos.eventos.utils.Constants;
 @Service
 @Slf4j
 public class TransferDataService {
-	
+
 	@Autowired
 	private TransferRepository transferRepository;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Transactional
 	@SneakyThrows
 	public TransferDTO initializeTransfer(TransferDTO transfer) {
-		Transfer t = new Transfer();
-		t.setAccountIdFrom(transfer.getAccountIdFrom());
-		t.setAccountIdTo(transfer.getAccountIdTo());
-		t.setAmount(transfer.getAmount());
-		t.setState(Constants.Estado.INICIADA.getValue());
-		t.setStart(new Date());
-		
+		Transfer t = Transfer.builder()
+			.accountIdFrom(transfer.getAccountIdFrom())
+			.accountIdTo(transfer.getAccountIdTo())
+			.amount(transfer.getAmount())
+			.state(Constants.Estado.INICIADA.getValue())
+			.start(new Date())
+			.build();
+
 		t = transferRepository.save(t);
 		return modelMapper.map(t, TransferDTO.class);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public List<TransferDTO> getTransfers() {
-		List<Transfer> transfers = transferRepository.findAll();
-		return CollectionUtils.isNotEmpty(transfers) ? transfers.stream()
-				.map(transfer -> modelMapper.map(transfer, TransferDTO.class)).collect(Collectors.toList())
-				: Collections.emptyList();
+		return transferRepository.findAll()
+				.stream()
+				.map(transfer -> modelMapper.map(transfer, TransferDTO.class))
+				.collect(Collectors.toList());
 	}
-	
+
 	@Transactional(readOnly = true)
-	public TransferDTO getTransfer(Long id) {
-		Optional<Transfer> oTransfer = transferRepository.findById(id);
-		return oTransfer.isPresent() ? modelMapper.map(oTransfer.get(), TransferDTO.class) : null;
+	public Optional<TransferDTO> getTransfer(Long id) {
+		return transferRepository.findById(id)
+				.map( tr-> modelMapper.map(tr, TransferDTO.class));
 	}
-	
+
 	@Transactional
 	@SneakyThrows
 	public TransferDTO saveTransfer(TransferDTO transfer) {

@@ -25,7 +25,7 @@ public class AccountController {
 	
 	@PostMapping("/transfers/sincrona")
 	public TransferDTO addTransferSincrona(@RequestBody TransferDTO transfer) {
-		return transferFacade.addTransferSincrona(transfer);
+		return transferFacade.addTransferSincrona(transfer).orElse(new TransferDTO());
 	}
 	
 	@GetMapping("/transfers")
@@ -35,6 +35,6 @@ public class AccountController {
 	
 	@GetMapping("/transfers/{id}")
 	public TransferDTO getTransfer(@PathVariable Long id) {
-		return transferFacade.getTransfer(id);
+		return transferFacade.getTransfer(id).orElse(new TransferDTO());
 	}
 }
