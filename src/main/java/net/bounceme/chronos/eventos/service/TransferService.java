@@ -40,8 +40,6 @@ public class TransferService {
 	}
 
 	private void acceptTransfer(TransferDTO t) {
-		log.info("Iniciando transacción de {} a {}", t.getAccountIdFrom(), t.getAccountIdTo());
-
 		t.setEnd(new Date());
 		t.setState(Constants.Estado.COMPLETADA.getValue());
 		
@@ -57,6 +55,6 @@ public class TransferService {
 		
 		transferDataService.saveTransfer(t);
 
-		log.info("La cantidad {} supera el límite establecido. Transacción rechazada", t.getAmount());
+		log.info("Transacción rechazada. La cantidad {} supera el límite establecido", t.getAmount());
 	}
 }
